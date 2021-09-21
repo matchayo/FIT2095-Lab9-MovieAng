@@ -6,13 +6,11 @@ import { ActorComponent } from './actor/actor.component';
 import { DatabaseService } from './database.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MovieComponent } from './movie/movie.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ActorComponent,
-    MovieComponent
+    ActorComponent
   ],
   imports: [
     BrowserModule,
