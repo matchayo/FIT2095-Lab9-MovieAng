@@ -33,3 +33,6 @@ app.get('/movies', movies.getAll);
 app.post('/movies', movies.createOne);
 app.get('/movies/:id', movies.getOne);
 app.put('/movies/:id', movies.updateOne);
+app.delete('/movies/:title', movies.deleteOne);
+app.delete('/movies/:year1/:year2', movies.deleteBetweenYears);
+app.put('/movies/:id/actors', movies.addActorToMovie);

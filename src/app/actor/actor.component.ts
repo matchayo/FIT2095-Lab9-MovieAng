@@ -15,6 +15,15 @@ export class ActorComponent implements OnInit {
   name: string = "";
   bYear: number = 0;
   actorId: string = "";
+  
+  moviesDB: any[] = [];
+  title: string = "";
+  year: number = 0;
+  actor: object = {};
+  movieId: string = "";
+
+  aYear1: number = 0;
+  aYear2: number = 0;
 
   constructor(private dbService: DatabaseService) { }
 
@@ -66,9 +75,61 @@ export class ActorComponent implements OnInit {
     });
   }
 
+  // Get all movies
+  onGetMovies() {
+    this.dbService.getMovies().subscribe((data: any) => {
+      this.moviesDB = data;
+      console.log(data);
+    });
+  }
+
+  // Add or save a movie
+  onSaveMovie() {
+    let newMovie = {
+      title: this.title,
+      year: this.year
+    };
+
+    this.dbService.createMovie(newMovie).subscribe((result: any) => {
+      this.changeSection(5);
+      this.onGetMovies();
+    });
+  }
+
+  // Delete a movie
+  onDeleteMovie(movie: any) {
+    this.dbService.deleteMovie(movie.title).subscribe((result: any) => {
+      this.changeSection(5);
+      this.onGetMovies();
+    });
+  }
+  
+  onDeleteMoviesBetweenYears() {
+    this.dbService.deleteMovies(this.aYear1, this.aYear2).subscribe((result: any) => {
+      this.changeSection(5);
+      this.onGetMovies();
+    });
+  }
+
+  onSelectActor(anActor: any) {
+    this.actor = anActor;
+  }
+  
+  onSelectMovie(aMovie: any) {
+    this.movieId = aMovie._id;
+  }
+  
+  onAddActorToMovie() {
+    this.dbService.addActorToMovie(this.movieId, this.actor).subscribe((result: any) => {
+      this.changeSection(5);
+      this.onGetMovies();
+    });
+  }
+
   // A lifecycle callback function will be invoked with the component get initialized by Angular
   ngOnInit(): void {
     this.onGetActors();
+    this.onGetMovies();
   }
 
   changeSection(sectionId: number) {

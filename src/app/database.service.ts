@@ -43,4 +43,34 @@ export class DatabaseService {
     let pathName = "/actors/" + id;
     return this.http.delete(pathName, httpOptions);
   }
+
+  // Add or create a movie
+  createMovie(newMovie: object) {
+    let pathName = "/movies";
+    return this.http.post(pathName, newMovie, httpOptions);
+  }
+
+  // Delete an movie by title
+  deleteMovie(title: string) {
+    let pathName = "/movies/" + title;
+    return this.http.delete(pathName, httpOptions);
+  }
+
+  // Delete all movies produced between aYear1 and aYear2
+  deleteMovies(aYear1: number, aYear2: number) {
+    let pathName = "/movies/" + aYear1 +"/" + aYear2;
+    return this.http.delete(pathName, httpOptions);
+  }
+  
+  // Get all movies
+  getMovies() {
+    let pathName = "/movies";
+    return this.http.get(pathName);
+  }
+  
+  // Get an actor by id
+  addActorToMovie(id: string, actor: object) {
+    let pathName = "/movies/" + id + "/actors";
+    return this.http.put(pathName, actor, httpOptions);
+  }
 }
