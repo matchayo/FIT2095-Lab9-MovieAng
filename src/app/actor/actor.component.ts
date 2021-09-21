@@ -22,6 +22,7 @@ export class ActorComponent implements OnInit {
   actor: object = {};
   movieId: string = "";
 
+  aTitle: string = "";
   aYear1: number = 0;
   aYear2: number = 0;
 
@@ -97,13 +98,14 @@ export class ActorComponent implements OnInit {
   }
 
   // Delete a movie
-  onDeleteMovie(movie: any) {
-    this.dbService.deleteMovie(movie.title).subscribe((result: any) => {
+  onDeleteMovie() {
+    this.dbService.deleteMovie(this.aTitle).subscribe((result: any) => {
       this.changeSection(5);
       this.onGetMovies();
     });
   }
   
+  // Delete movies between two years
   onDeleteMoviesBetweenYears() {
     this.dbService.deleteMovies(this.aYear1, this.aYear2).subscribe((result: any) => {
       this.changeSection(5);
@@ -111,14 +113,17 @@ export class ActorComponent implements OnInit {
     });
   }
 
+  // Select actor to add
   onSelectActor(anActor: any) {
     this.actor = anActor;
   }
   
+  // Select movie
   onSelectMovie(aMovie: any) {
     this.movieId = aMovie._id;
   }
   
+  // Add selected actor to selected movie
   onAddActorToMovie() {
     this.dbService.addActorToMovie(this.movieId, this.actor).subscribe((result: any) => {
       this.changeSection(5);
@@ -132,13 +137,25 @@ export class ActorComponent implements OnInit {
     this.onGetMovies();
   }
 
+  // Change the section
   changeSection(sectionId: number) {
+    this.resetValues();
     this.section = sectionId;
   }
 
+  // Reset values
   resetValues() {
     this.name = "";
     this.bYear = 0;
     this.actorId = "";
+  
+    this.title = "";
+    this.year = 0;
+    this.actor = {};
+    this.movieId = "";
+  
+    this.aTitle = "";
+    this.aYear1 = 0;
+    this.aYear2 = 0;
   }
 }

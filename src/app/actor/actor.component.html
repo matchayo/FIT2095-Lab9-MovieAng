@@ -165,16 +165,20 @@
 
 <!-- Section 8 (DELETE MOVIE): Delete a movie -->
 <div class="section" *ngIf="section==8">
+    <div class="form-group">
+        <label for="aTitle">Title</label>
+        <input type="text" class="form-control" id="aTitle" [(ngModel)]="aTitle">
+    </div>
+    <button type="submit" class="btn btn-danger" (click)="onDeleteMovie()">Delete Movies</button>
+    
     <table class="table table-striped">
         <tr>
             <th>Title</th>
             <th>Year</th>
-            <th>Delete?</th>
         </tr>
         <tr *ngFor="let movie of moviesDB">
             <td>{{movie.title}}</td>
             <td>{{movie.year}}</td>
-            <td><button type="submit" class="btn btn-primary" (click)="onDeleteMovie(movie)">Delete</button></td>
         </tr>
     </table>
 </div>
