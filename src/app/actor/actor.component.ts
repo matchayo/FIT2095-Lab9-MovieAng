@@ -131,6 +131,14 @@ export class ActorComponent implements OnInit {
     });
   }
 
+  // Delete an actor
+  onDeleteMovieFromActor() {
+    this.dbService.deleteMovieFromActor(this.actorId, this.movieId).subscribe((result: any) => {
+      this.changeSection(1);
+      this.onGetActors();
+    });
+  }
+
   // A lifecycle callback function will be invoked with the component get initialized by Angular
   ngOnInit(): void {
     this.onGetActors();

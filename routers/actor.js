@@ -84,5 +84,37 @@ module.exports = {
                 });
             })
         });
+    },
+
+    // Delete a movie from an actor
+    deleteMovieFromActor: function (req, res) {
+        
+        Actor.findOne({_id: req.params.aId}, function (err, actor) {
+            if (err) return res.status(400).json(err);
+            if (!actor) return res.status(404).json();
+            console.log(actor);
+            Movie.findOne({_id: req.params.mId}, function (err, movie) {
+                if (err) return res.status(400).json(err);
+                if (!movie) return res.status(404).json();
+                console.log(movie);
+
+                var index = -1;
+                for (let i = 0; i < actor.movies.length; i++) {
+                        let currentMovie = new mongoose.Types.ObjectId(actor.movies[i]);
+                    if (currentMovie == req.params.mId) {
+                        index = i;
+                    }
+                }
+
+                if (index === -1) return res.status(404).json()
+                    
+                actor.movies.splice(index, 1);
+
+                actor.save(function (err) {
+                    if (err) return res.status(500).json(err);
+                    res.json(actor);
+                });
+            });
+        });
     }
 };

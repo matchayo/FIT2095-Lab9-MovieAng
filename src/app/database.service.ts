@@ -12,7 +12,6 @@ const httpOptions = {
 export class DatabaseService {
 
   constructor(private http: HttpClient) { }
-  result: any; // What is this for?
 
   // Get all actors
   getActors() {
@@ -72,5 +71,11 @@ export class DatabaseService {
   addActorToMovie(id: string, actor: object) {
     let pathName = "/movies/" + id + "/actors";
     return this.http.put(pathName, actor, httpOptions);
+  }
+
+  // Delete a movie from an actor's movies (EXTRA TASK)
+  deleteMovieFromActor(actorId: string, movieId: string) {
+    let pathName = "/actors/" + actorId + "/" + movieId;
+    return this.http.delete(pathName, httpOptions);
   }
 }
